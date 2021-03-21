@@ -19,6 +19,10 @@ Besides requirements, there are some premisses to consider:
 
 ## ACME API
 
+The following Sequence Diagram can help us understand how messages would be exchanged among each actor within our system:
+
+![Sequence Diagram](/UseCase.png "Sequence Diagram")
+
 We will use a microsservices architecture, where each service should be stateless, autonomous and provide a single functionality. Services will exchange messages through an event queue.
 We should split our system into 5 services:
 
@@ -37,9 +41,9 @@ This service should receive requests for credit score, calculate and provide a r
 ### STORE SERVICE
 This service should listen to the event queue, and for every Bank API response and every credit score Calculation response it should anonymize sensitive data and store in a database.
 
-PUT USE CASE DIAGRAM
+This is how our microsservices architecture should look like:
 
-PUT ARCHITECTURE DIAGRAM
+![Microsservices Architecture](/Architecture.png "Microsservices Architecture")
 
 ## TEAM STRUCTURE
 As we planned to have 5 services, our first approach in order to organize our team may consider the Conway's law:
@@ -56,7 +60,7 @@ Considering our proposed engineering team of 20 ICs and 4 product managers, we w
 <li> STORE SERVICE: this squad would have 3 ICs and a product manager, to be split with the INFRA squad</li>
 <li> INFRA STRUCTURE SQUAD: this would be the largest squad (5 ICs) as it would have to provide the architecture and scalability for the other squads. It may share its product manager with another squad because its main challenges should be technical, and not from business (what would need an extra effort from a PM)</li>
 
-PUT ORG CHART
+![Organization Chart](/OrgChart.png "Organization Chart")
 
 ## PROJECT MILESTONES
 
@@ -67,7 +71,7 @@ The next milestone should consider the delivery of the QA environment and a CI/C
 At this point, we should be ready to have integration tests, so the next milestone should consider the services tested as one system.
 The next should be the CI/CD pipeline to the production environment.
 
-MILESTONES
+![Milestones](/Milestones.png "Milestones")
 
 ## SCALABILITY
 If we need to scale our system, for instance go from 10 credit score requests/second to 100 requests/second, we should consider it a matter of architecture in order to handle it - we would not make changes in our codebase (as we have the premisse to have credit scores calculation and bank api requests to last around 10 seconds each), we would keep the length of each call, but provide an architecture to have more requests in parallel.
